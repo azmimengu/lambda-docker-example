@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-docker-example
+
+  Sample SAM Template for lambda-docker-example
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  FirstFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        HelloFirst:
+          Type: Api
+          Properties:
+            Path: /hello-first
+            Method: get
+    Metadata:
+      DockerTag: first-function.v1
+      DockerContext: ./first-function
+      Dockerfile: Dockerfile
+  SecondFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        HelloSecond:
+          Type: Api
+          Properties:
+            Path: /hello-second
+            Method: get
+    Metadata:
+      DockerTag: second-function.v1
+      DockerContext: ./second-function
+      Dockerfile: Dockerfile
